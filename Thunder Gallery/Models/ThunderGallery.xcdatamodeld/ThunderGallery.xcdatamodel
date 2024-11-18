@@ -1,0 +1,40 @@
+import CoreData
+
+entity Photo {
+    attribute uuid: UUID
+    attribute createdAt: Date
+    attribute lastModifiedAt: Date
+    attribute localIdentifier: String
+    attribute isFavorite: Boolean
+    attribute customMetadata: Binary
+    relationship edits: EditHistory (to-many)
+    relationship album: Album
+}
+
+entity Album {
+    attribute name: String
+    attribute createdAt: Date
+    attribute coverPhotoId: String
+    relationship photos: Photo (to-many)
+}
+
+entity EditHistory {
+    attribute editDate: Date
+    attribute editType: String
+    attribute editParameters: Binary
+    relationship photo: Photo
+}
+
+entity FacePerson {
+    attribute name: String
+    attribute createdAt: Date
+    attribute lastUpdated: Date
+    relationship faces: FaceInstance (to-many)
+}
+
+entity FaceInstance {
+    attribute assetIdentifier: String
+    attribute features: Binary  // Stored FaceFeatures
+    attribute createdAt: Date
+    relationship person: FacePerson
+} 
